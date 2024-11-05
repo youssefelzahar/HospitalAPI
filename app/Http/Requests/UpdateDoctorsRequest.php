@@ -11,7 +11,7 @@ class UpdateDoctorsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,11 @@ class UpdateDoctorsRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required|string',
+            'gender'=>'required|string',
+            'phone'=>'required|string',
+            'department'=>'required|string',
+            'work_hours'=>'required|date',
         ];
     }
 }

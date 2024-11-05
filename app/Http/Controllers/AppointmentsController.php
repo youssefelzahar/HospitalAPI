@@ -6,15 +6,24 @@ use App\Models\Appointments;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentsRequest;
 use App\Http\Requests\UpdateAppointmentsRequest;
-
+use App\ResponseTrait;
+use App\BaseRepo\BaseRepo;
+use App\Http\ControllerRepo\AppointmentsRepo;
 class AppointmentsController extends Controller
 {
+    use ResponseTrait;
+    protected $repo;
+    public function __construct(AppointmentsRepo $repo){
+        $this->repo = $repo;
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $data= $this->repo->index();
+        return $this->success($data);
     }
 
     /**
@@ -30,7 +39,12 @@ class AppointmentsController extends Controller
      */
     public function store(StoreAppointmentsRequest $request)
     {
-        //
+        try{
+            $appointments=$this->repo->store($request->validated());
+            return $this->success(data:$appointments,message:"Appointment created successfully");
+        }catch(\Exception $e){
+            return $this->failure(message:"error",error:$e->getMessage());
+        }
     }
 
     /**
@@ -54,7 +68,12 @@ class AppointmentsController extends Controller
      */
     public function update(UpdateAppointmentsRequest $request, Appointments $appointments)
     {
-        //
+        try{
+            $appointments=$this->repo->update($appointments->id,$request->validated());
+            return $this->success(data:$appointments,message:"Appointment updated successfully");
+        }catch(\Exception $e){
+            return $this->failure(message:"error",error:$e->getMessage());
+        }
     }
 
     /**
@@ -62,6 +81,11 @@ class AppointmentsController extends Controller
      */
     public function destroy(Appointments $appointments)
     {
-        //
+        try{
+            $this->repo->destroy($appointments->id);
+            return $this->success(message:"Appointment deleted successfully");
+        }catch(\Exception $e){
+            return $this->failure(message:"error",error:$e->getMessage());
+        }
     }
 }

@@ -11,7 +11,7 @@ class StoreDepartmentsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreDepartmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'=> 'required|string',
+            'description'=> 'required|string',
+            'location'=> 'required|string',
+            'open_hours'=> 'required|date',
+            'doctorid'=> 'required|integer',
         ];
     }
 }
