@@ -6,6 +6,7 @@ use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\MedicationsController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -42,6 +43,16 @@ Route::controller(AppointmentsController::class)->group(function () {
     Route::post('/appointments', 'store');
     Route::put('/appointments/{appointments}', 'update');
     Route::delete('/appointments/{appointments}', 'destroy');
+    Route::get('/appointments/filter-by-patient', 'getAppointmentswithpatientname');
+
+});
+
+Route::controller(MedicationsController::class)->group(callback: function () {
+    Route::get('/medications', 'index')->name('medications.index');
+    Route::post('/medications', 'store');
+    Route::put('/medications/{medications}', 'update');
+    Route::delete('/medications/{medications}', 'destroy');
+    Route::get('/medications/filter-by-quantity', 'filterByQuantity');
 
 });
 

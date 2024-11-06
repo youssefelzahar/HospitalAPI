@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateAppointmentsRequest;
 use App\ResponseTrait;
 use App\BaseRepo\BaseRepo;
 use App\Http\ControllerRepo\AppointmentsRepo;
+use Illuminate\Http\Request;
 class AppointmentsController extends Controller
 {
     use ResponseTrait;
@@ -88,4 +89,12 @@ class AppointmentsController extends Controller
             return $this->failure(message:"error",error:$e->getMessage());
         }
     }
+    public function  getAppointmentswithpatientname(Request $request){
+        $request->validate([
+            'type_of_appointment' => 'required|string',
+        ]);
+
+   return $this->success($this->repo->getAppointmentswithpatientname($request->type_of_appointment));
+   
+}
 }
