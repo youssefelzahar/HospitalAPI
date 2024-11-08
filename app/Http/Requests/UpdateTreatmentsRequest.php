@@ -11,7 +11,7 @@ class UpdateTreatmentsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class UpdateTreatmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "prescribed_treatment"=>"required",
+            "dosage"=>"required",
+            "treatments_description"=>"required",
+            "patient_id"=>"required",
+            "doctor_id"=>"required",
+            "medication_id"=>"required",
+
         ];
     }
 }

@@ -104,4 +104,13 @@ class DoctorsController extends Controller
         $data= $this->repo->getDoctorwithDepartmentandAppointment();
         return $this->success($data);
     }
+    public function Doctoswithnoofpatients(){
+        $data= $this->repo->Doctoswithnoofpatients();
+        return $this->success($data);
+    }
+
+    public function getDoctorAppointmentStatusCounts(){
+        $data= $this->repo->getDoctorAppointmentStatusCounts();
+        return $this->success($data);
+    }
 }

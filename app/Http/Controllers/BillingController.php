@@ -6,15 +6,22 @@ use App\Models\Billing;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBillingRequest;
 use App\Http\Requests\UpdateBillingRequest;
-
+use App\Http\ControllerRepo\BillingRepo;
+use App\ResponseTrait;
 class BillingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    use ResponseTrait;
+    protected $repo;
+    public function __construct(BillingRepo $repo){
+        $this->repo = $repo;
+    }
     public function index()
     {
-        //
+        $index = $this->repo->index();
+        return $this->success($index);
     }
 
     /**
@@ -30,7 +37,12 @@ class BillingController extends Controller
      */
     public function store(StoreBillingRequest $request)
     {
-        //
+        try{
+            $store = $this->repo->store($request->validated());
+            return $this->success($store,'Billing created successfully');
+        }catch(\Exception $e){
+            return $this->failure($e->getMessage(),'error');
+        }
     }
 
     /**
@@ -54,7 +66,12 @@ class BillingController extends Controller
      */
     public function update(UpdateBillingRequest $request, Billing $billing)
     {
-        //
+        try{
+            $update = $this->repo->update($billing->id,$request->validated());
+            return $this->success($update,'Billing updated successfully');
+        }catch(\Exception $e){
+            return $this->failure($e->getMessage(),'error');
+        }
     }
 
     /**
@@ -62,6 +79,11 @@ class BillingController extends Controller
      */
     public function destroy(Billing $billing)
     {
-        //
+        try{
+            $destroy = $this->repo->destroy($billing->id);
+            return $this->success($destroy,'Billing deleted successfully');
+        }catch(\Exception $e){
+            return $this->failure($e->getMessage(),'error');
+        }
     }
 }

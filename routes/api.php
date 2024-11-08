@@ -7,6 +7,8 @@ use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\MedicationsController;
+use App\Http\Controllers\TreatmentsController;
+use App\Http\Controllers\BillingController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -27,6 +29,8 @@ Route::controller(DoctorsController::class)->group(callback: function () {
     Route::put('/doctors/{doctors}', 'update');
     Route::delete('/doctors/{doctors}', 'destroy');
     Route::get('/getDoctorwithDepartmentandAppointment', 'getDoctorwithDepartmentandAppointment');
+    Route::get('/getDoctorwithnoofpatients', 'Doctoswithnoofpatients');
+    Route::get('/getDoctorAppointmentStatusCounts', 'getDoctorAppointmentStatusCounts');
 
 });
 
@@ -56,4 +60,18 @@ Route::controller(MedicationsController::class)->group(callback: function () {
 
 });
 
+Route::controller(TreatmentsController::class)->group(callback: function () {
+    Route::get('/treatments', 'index')->name('treatments.index');
+    Route::post('/treatments', 'store');
+    Route::put('/treatments/{treatments}', 'update');
+    Route::delete('/treatments/{treatments}', 'destroy');
 
+});
+
+Route::controller(BillingController::class)->group(callback: function () {
+    Route::get('/billing', 'index')->name('billing.index');
+    Route::post('/billing', 'store');
+    Route::put('/billing/{billing}', 'update');
+    Route::delete('/billing/{billing}', 'destroy');
+
+});

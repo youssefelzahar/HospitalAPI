@@ -11,7 +11,7 @@ class UpdateBillingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateBillingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cost' => 'required',
+            'type' => 'required',
+            'dateofpayment'=>'required|date',
         ];
     }
 }
